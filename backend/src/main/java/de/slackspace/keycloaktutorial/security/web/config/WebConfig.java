@@ -1,13 +1,13 @@
 package de.slackspace.keycloaktutorial.security.web.config;
 
-import java.util.List;
-
+import de.slackspace.keycloaktutorial.security.web.resolver.UserDetailsArgumentResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import de.slackspace.keycloaktutorial.security.web.resolver.UserDetailsArgumentResolver;
+import java.util.List;
 
 @Configuration
 public class WebConfig extends WebMvcConfigurerAdapter {
