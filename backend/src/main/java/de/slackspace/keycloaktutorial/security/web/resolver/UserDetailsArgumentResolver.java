@@ -37,6 +37,8 @@ public class UserDetailsArgumentResolver implements HandlerMethodArgumentResolve
 
         AccessToken token = principal.getKeycloakSecurityContext().getToken();
 
+        //System.out.println(principal.getKeycloakSecurityContext().getAuthorizationContext().getPermissions());
+
         return new UserDetails(token.getId(), token.getGivenName(),
                 token.getFamilyName(), token.getEmail(),
                 token.getRealmAccess().getRoles());
