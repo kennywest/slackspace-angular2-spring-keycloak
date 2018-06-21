@@ -1,0 +1,69 @@
+{
+  "allowRemoteResourceManagement": false,
+  "policyEnforcementMode": "ENFORCING",
+  "resources": [
+    {
+      "name": "Default Resource",
+      "uri": "/*",
+      "type": "urn:client-role-test:resources:default",
+      "ownerManagedAccess": false,
+      "attributes": {},
+      "_id": "46464262-a935-460e-8319-bafa63f55596"
+    },
+    {
+      "name": "contracts",
+      "uri": "/api/contracts/*",
+      "ownerManagedAccess": false,
+      "displayName": "contracts",
+      "attributes": {},
+      "_id": "7fb9c80b-db97-4b63-b3ed-32bfcfed2f35"
+    }
+  ],
+  "policies": [
+    {
+      "id": "a100eb0d-489f-40d3-95f5-429dd8d755a0",
+      "name": "Default Policy",
+      "description": "A policy that grants access only for users within this realm",
+      "type": "js",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "code": "// by default, grants any permission associated with this policy\n$evaluation.grant();\n"
+      }
+    },
+    {
+      "id": "614c1f69-227c-4655-932e-bb6321699375",
+      "name": "role_is_admin",
+      "type": "role",
+      "logic": "POSITIVE",
+      "decisionStrategy": "UNANIMOUS",
+      "config": {
+        "roles": "[{\"id\":\"ROLE_ADMIN\",\"required\":false}]"
+      }
+    },
+    {
+      "id": "0dcb9b79-132a-4367-8462-4af3a1650e34",
+      "name": "Default Permission",
+      "description": "A permission that applies to the default resource type",
+      "type": "resource",
+      "logic": "POSITIVE",
+      "decisionStrategy": "UNANIMOUS",
+      "config": {
+        "defaultResourceType": "urn:client-role-test:resources:default",
+        "applyPolicies": "[\"Default Policy\"]"
+      }
+    },
+    {
+      "id": "c1fcc206-8a99-4b64-b41e-188beb339f84",
+      "name": "read:contracts",
+      "type": "resource",
+      "logic": "POSITIVE",
+      "decisionStrategy": "UNANIMOUS",
+      "config": {
+        "resources": "[\"contracts\"]",
+        "applyPolicies": "[\"role_is_admin\"]"
+      }
+    }
+  ],
+  "scopes": []
+}
