@@ -1,24 +1,26 @@
-import { HttpModule } from '@angular/http';
-import { ContractService } from './shared/service/contract.service';
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-
-import { AppComponent } from './app.component';
-import { KeycloakHttp, KEYCLOAK_HTTP_PROVIDER } from './shared/service/keycloak.http';
-import { KeycloakService } from './shared/service/keycloak.service';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { KeycloakAngularModule, KeycloakService } from "keycloak-angular";
+import { initializer } from './utils/app-init';
+import { BrowserModule } from "@angular/platform-browser";
+import { AppComponent } from "./app.component";
+import { ContractService } from "./shared/service/contract.service";
+import { HttpModule } from "@angular/http";
 
 @NgModule({
   declarations: [
     AppComponent
   ],
-  imports: [
-    BrowserModule,
-    HttpModule
-  ],
-  providers: [KEYCLOAK_HTTP_PROVIDER,
-    KeycloakService,
+  imports: [BrowserModule, KeycloakAngularModule, HttpModule],
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializer,
+      multi: true,
+      deps: [KeycloakService]
+    },
     ContractService
-    ],
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
